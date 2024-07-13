@@ -1,11 +1,20 @@
 package com.tunar.springdemo.student;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.Period;
+
+@Entity
 public class Student {
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
+    @Transient
     private int age;
     private LocalDate dateOfBirth;
 
@@ -18,6 +27,14 @@ public class Student {
     }
 
     public Student() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -45,7 +62,7 @@ public class Student {
     }
 
     public int getAge() {
-        return age;
+        return Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
 
     public void setAge(int age) {
@@ -59,4 +76,6 @@ public class Student {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+
 }
